@@ -58,13 +58,14 @@ The loop starts at 01:00, just as the first event begins. The sidebar's
 |---|---|---|
 | 01:00 | Let it run | H₂S detectors at the well bay climb into warning then alarm. A dashed outline and drift arrow appear, and the alert pulses at the top of the list. |
 | ~01:40 | Watch the Personnel tile | Crew move from the quarters to the muster station: "MUSTER 52/54" and a count of who isn't there yet. |
-| ~02:30 | Click the pit volume marker on the drill floor | Well control goes to FLOW CHECK. The detail panel's trend crosses the warning line; "What it tells you" explains why pit gain matters. |
+| ~02:30 | Click the pit volume marker on the drill floor | Well control goes to FLOW CHECK. The detail drawer's trend crosses the warning line; "What it tells you" explains why pit gain matters, and *Also at* lists the rest of the drill floor. |
 | Any time | Click **Ack all** | Pulses stop; alerts stay listed as ACK until the readings return to normal. |
 | 04:00 | Jump to *Mesh node offline* | A jacket strain gauge shows NO DATA, the footer reports the mesh as degraded and re-routed. |
 | 05:00 | Jump to *Squall line passing* | The sky darkens, rain and lightning appear, waves build, the wind arrow swings, helideck and crane ops are suspended. |
 | 06:10 | Jump to *Unusual Modbus writes* | A cyber alert and denied badge attempts at the control-room door appear together. |
 | Any time | Open the raw feed, switch to **JSON**, tick **Exceptions only** | This is what the API delivers, filtered to what's abnormal. |
-| Any time | Click the **Security** tile or a module on the drawing | Everything outside the filter dims; the feed and (optionally) the alert list follow. |
+| Any time | Click the helideck on the drawing, then **Show only these sensors** in the banner | The banner names the area; the filter dims everything else, and the feed and (optionally) the alert list follow. Pick **Helideck & crane ops** under Views for the same thing in one click. |
+| Any time | Press **Live** to pause | The screen freezes while data queues; Resume catches up at once. |
 
 Useful URLs: `?t=300` starts at the squall, `?speed=5` runs five times faster,
 `?theme=light` for projectors and printouts.

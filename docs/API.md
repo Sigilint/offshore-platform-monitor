@@ -17,6 +17,7 @@ noted). The REST paths are the ones a real service would expose.
 | `getAlerts()` | `GET /alerts` | [Alert](#alert)`[]` |
 | `acknowledgeAlert(alertId)` | `POST /alerts/:id/ack` | `{ ok: true }` (60–220 ms) |
 | `acknowledgeAll()` | `POST /alerts/ack-all` | `{ ok: true }` (60–220 ms) |
+| `getViews()` | `GET /views` | Built-in views: `{ id, name, description?, filters, builtIn: true }[]` |
 | `evaluate(type, value)` | (shared helper) | `{ status, dir?, limit? }`, synchronous |
 
 ### Demo-only

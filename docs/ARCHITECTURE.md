@@ -25,14 +25,20 @@ see [Roadmap](ROADMAP.md).
 | `js/api.jsx` | `window.PlatformAPI` | The simulated server and the async API the UI calls |
 | `js/glyphs.jsx` | `CategoryIcon`, `StatusIcon`, `ShapePath`, `ShapeLetter`, `window.Fmt` | Category shapes, status icons, value / time / unit formatters |
 | `js/schematic.jsx` | `RigSchematic` | The platform drawing, live scene elements, markers, callouts, tooltip |
-| `js/panels.jsx` | `FilterRail`, `StatusStrip`, `AlertsPanel`, `SensorDetail` | Side panels, derived ops states, trend chart |
-| `js/feed.jsx` | `RawFeed` | The raw data feed |
-| `js/app.jsx` | (mounts `App`) | Initial load, polling, filter and selection state, layout, weather card |
+| `js/panels.jsx` | `FilterRail`, `StatusStrip`, `AlertsPanel` | Filter rail, status strip and derived ops states, alert list |
+| `js/feed.jsx` | `RawFeed` | The raw data feed: match-filters, clear, size, row click, new-row flash |
+| `js/drawer.jsx` | `SensorDrawer` | The detail drawer and its trend chart |
+| `js/views.jsx` | `ViewsSection`, `ViewStore` | Saved views in the rail; per-browser storage of saved views |
+| `js/zonebanner.jsx` | `ZoneBanner` | The area banner at the top of the schematic |
+| `js/app.jsx` | (mounts `App`) | Initial load, polling and live/paused, filter, selection, view and area state, layout, weather card |
 | `styles.css` | | Tokens for both themes, layout, schematic and component styles, breakpoints |
 | `scripts/gen-catalog-doc.js` | | Regenerates the tables in `docs/SENSOR_CATALOG.md` from the catalog |
 
 Load order: `catalog` → `platform` → `api` → `glyphs` → `schematic` →
-`panels` → `feed` → `app`.
+`panels` → `feed` → `drawer` → `views` → `zonebanner` → `app`.
+
+`feed`, `drawer`, `views` and `zonebanner` are identical in this project and
+`well-site-monitor`; keep them in sync.
 
 ## Data flow
 
@@ -51,8 +57,8 @@ Load order: `catalog` → `platform` → `api` → `glyphs` → `schematic` →
                                                                       │ props
                        ┌───────────────┬──────────────┬───────────────┼───────────┐
                        ▼               ▼              ▼               ▼           ▼
-                  StatusStrip     FilterRail    RigSchematic    SensorDetail   RawFeed
-                                                                + AlertsPanel
+                  StatusStrip     FilterRail    RigSchematic    AlertsPanel    RawFeed
+                                  + Views       + ZoneBanner    SensorDrawer
 ```
 
 The UI never reads simulator state directly. It only calls `PlatformAPI`
@@ -143,8 +149,23 @@ mutate server state.
   in parallel.
 - **Polling:** every second, `getReadings({ after: cursor })` and
   `getAlerts()` in parallel. New samples update `latest`, are prepended to the
-  feed (capped at 1,500), and are appended to the selected sensor's history.
-  The incoming rate is smoothed for the feed header.
+  feed (capped at 1,500), and are appended to the selected sensor's history
+  (skipping any sample it already has). The incoming rate is smoothed for the
+  feed header.
+- **Live / Paused:** while paused, polling continues so the cursor keeps up,
+  but each batch is queued instead of applied. Resume applies the queued
+  readings, the latest alert list and the clock in one go.
+- **Views:** built-in views come from `getViews()`. Saved views live in
+  `localStorage` (`opm-views`) for the demo. A view stores its filters as
+  plain sorted arrays, so "is this view active?" is a JSON comparison with the
+  current filters.
+- **Per-viewer preferences:** theme, feed size and whether the weather card
+  is open are stored in `localStorage` under the `opm-` prefix. Each read
+  is wrapped so the page works without storage.
+- **Area banner:** `hoverZone` comes from hovering an area, a marker or a rail
+  location; `pinnedZone` from clicking an area. The banner shows the hovered
+  area if there is one, otherwise the pinned one, and offers filter buttons
+  only when pinned. Esc closes the drawer first, then unpins.
 - **Selection** fetches `getHistory(id)` once; polling keeps it current.
 - **Filters** are one object: `{ categories: Set, zones: Set, type, status, q }`.
   `isVisible(sensor)` decides dimming on the drawing and alert filtering;

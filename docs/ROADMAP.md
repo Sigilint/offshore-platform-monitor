@@ -9,8 +9,6 @@
   running the simulator in Node; there is no test suite.
 - **In-browser Babel.** Start-up compiles every `.jsx` file in the page. Fine
   for a demo, too slow and too permissive for production.
-- **Feed rows aren't clickable.** Selecting a sensor works from the drawing
-  and the alert list only.
 - **No alert history.** An alert is removed once it is acknowledged and back
   to normal. There is no event log, shelving, suppression or first-out
   indication.
@@ -26,21 +24,14 @@
 Grouped roughly by effort.
 
 **Small**
-- Click a feed row to select its sensor.
-- Feed header: events per minute, a *Match filters* switch (off shows
-  everything), Clear, and a brief highlight on new rows.
-- A Live / Paused control in the top bar, and a *system* theme option.
+- A *system* theme option alongside light and dark.
 - An `aria-live` region announcing new alarms.
+- Keyboard access to areas on the drawing (the banner works by mouse; the
+  rail's location list is the keyboard path today).
 
 **Medium**
-- **Detail drawer.** Move sensor detail into a drawer from the right, opened
-  from the drawing, an alert or a feed row. Leaves the side column for alerts
-  and gives room for related alerts, a longer trend, and the raw JSON for the
-  sensor.
 - **Alert log.** Keep cleared alerts with raise, ack and clear times; add
   shelving with a reason and expiry, per ISA-18.2.
-- **Saved views.** Named filter sets such as "Well bay safety" or "Weather
-  ops" in the rail.
 - **Replay.** Scrub back through the last hour and watch the drawing as it was.
 
 **Large**
@@ -56,11 +47,12 @@ Grouped roughly by effort.
 The release dashboard prototype
 (`releasedashboard/releasedashboard-prototype-c1`) uses the same shell:
 header, left sidebar, main view, docked event stream and summary strip. To
-make the two feel like one product family, adopt its stream conventions,
-detail drawer, Live toggle, saved views and system theme default (the items
-above). Keep the colour rules different on purpose: the release dashboard
-colours event types, whereas a control-room screen reserves colour for
-abnormal states.
+make the two feel like one product family, this demo has adopted its stream
+conventions (rate, match filters, clear, expand / collapse, click a line to
+open it, new-line flash), detail drawer, Live / Paused and saved views. The
+system theme default is still to do. The colour rules stay different on
+purpose: the release dashboard colours event types, whereas a control-room
+screen reserves colour for abnormal states.
 
 ## Open questions for a real deployment
 

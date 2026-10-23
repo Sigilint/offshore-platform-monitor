@@ -20,15 +20,21 @@
 
 ## Layout
 
-A full-height shell: top bar, status strip, a three-column main area (filter
-rail · schematic · detail and alerts), the raw feed docked below, and a status
-bar.
+A full-height shell: top bar, status strip, a three-column main area (views
+and filter rail · schematic · alerts), the raw feed docked below, and a
+status bar. The detail drawer slides in from the right, next to the alerts
+column, so the alerts stay visible while a sensor is open.
+
+Overlays on the schematic:
+- the **area banner** at top left, naming the area under the pointer or the
+  pinned area
+- the **weather card** at top right, which collapses to a one-line chip
 
 | Width | Layout |
 |---|---|
 | Above 1440 px | Rail 248 px · schematic · side 330 px; strip shows categories and ops side by side |
 | 1101–1440 px | Rail 220 px · schematic · side 300 px; categories and ops on two rows |
-| 641–1100 px | Single column, page scrolls: schematic, then detail and alerts, then filters, then feed. Strip tiles three across; weather card scaled down |
+| 641–1100 px | Single column, page scrolls: schematic, then alerts, then filters, then feed. Strip tiles three across; weather card scaled down; the drawer covers the screen from the right over a dimmed backdrop |
 | Up to 640 px | Strip tiles two across; secondary feed columns, weather card and stage note hidden; top bar wraps |
 
 The schematic scales to fit (`preserveAspectRatio="xMidYMid meet"`). The feed
@@ -65,8 +71,8 @@ the alarm colours, and would break the "colour means abnormal" rule.
 | Unacknowledged | (status colour) | | Pulsing ring |
 | Selected | Accent blue | | Ring |
 
-The same icons appear in the strip, rail, alerts, detail, feed and weather
-card.
+The same icons appear in the strip, rail, area banner, alerts, drawer, feed
+and weather card.
 
 ## Tokens
 
@@ -97,8 +103,13 @@ Mono. Section labels are small uppercase mono.
   status; Enter or Space selects. Dimmed markers leave the tab order.
 - Status filter is a radio group; filters, toggles and buttons are native
   controls with labels.
-- The theme toggle and feed collapse have accessible names; the feed collapse
-  exposes `aria-expanded`.
+- The theme toggle, Live / Paused, weather card and feed size controls have
+  accessible names and expose `aria-pressed` or `aria-expanded`.
+- The drawer is labelled with the sensor's name. Focus moves to its close
+  button when it opens, and Esc closes it (then a pinned area banner).
+- Feed rows are focusable; Enter opens the sensor.
+- Saved-view buttons expose `aria-pressed` for the active view. The
+  save-view name field has a label and closes on Esc.
 - `prefers-reduced-motion` turns off pulses, waves, rain, the radar sweep and
   transitions.
 - Hover-only information (marker tooltip, trend crosshair) is also available
