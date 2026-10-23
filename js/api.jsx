@@ -12,7 +12,7 @@
 (() => {
 
 const { CATEGORIES, SENSOR_TYPES, ZONES } = window.Catalog;
-const { PLATFORM, SENSORS, SCENARIOS } = window.PlatformDef;
+const { PLATFORM, SENSORS, SCENARIOS, VIEWS } = window.PlatformDef;
 
 const SENSOR_BY_ID = Object.fromEntries(SENSORS.map(s => [s.id, s]));
 const LOOP = PLATFORM.loopSeconds;
@@ -299,6 +299,11 @@ const PlatformAPI = {
       if (a.state === "rtn") server.alerts.delete(key);
     }
     return respond({ ok: true }, 60, 220);
+  },
+
+  // GET /views — built-in views; user-saved views would live here too
+  getViews() {
+    return respond(VIEWS.map(v => ({ ...v, builtIn: true })));
   },
 
   // GET /scenarios — demo-only

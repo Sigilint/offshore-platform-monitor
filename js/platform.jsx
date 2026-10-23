@@ -251,6 +251,17 @@ const SCENARIOS = [
   },
 ];
 
-window.PlatformDef = { PLATFORM, SENSORS, SCENARIOS };
+// Built-in saved views (filter presets) offered to every user
+const VIEWS = [
+  { id: "all", name: "All sensors", filters: {} },
+  { id: "attention", name: "Needs attention", description: "Everything in warning or alarm", filters: { status: "attention" } },
+  { id: "wellbay", name: "Well bay & drill floor safety", filters: { categories: ["safety"], zones: ["DRL", "WHB"] } },
+  { id: "heli", name: "Helideck & crane ops", filters: { zones: ["DCK", "HLD", "MET"] } },
+  { id: "security", name: "Security watch", filters: { categories: ["security"] } },
+  { id: "integrity", name: "Jacket & subsea integrity", filters: { categories: ["structural"] } },
+  { id: "environment", name: "Discharges & emissions", filters: { categories: ["environment"] } },
+];
+
+window.PlatformDef = { PLATFORM, SENSORS, SCENARIOS, VIEWS };
 
 })();
