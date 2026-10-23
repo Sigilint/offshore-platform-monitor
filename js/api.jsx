@@ -200,7 +200,7 @@ function advance() {
 // Warm up a minute of history (loop t=0..60) so the first screen has trends
 // to draw; "now" lands at loop t=60s, as the first scenario starts.
 (() => {
-  server.lastWall = performance.now();
+  server.lastWall = performance.now() - 60000;
   server.simT = -60;
   server.nextDue = server.nextDue.map(d => d - 60);
   server.offset = 60;
