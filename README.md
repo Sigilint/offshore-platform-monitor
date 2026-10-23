@@ -9,6 +9,19 @@ through an async, API-shaped layer. Sibling of [`well-monitor`](../well-monitor)
 **Everything here is simulated.** The platform, sensor placements, readings and
 thresholds are fictional demo values, not engineering or safety limits.
 
+## Documentation
+
+| Document | What it covers |
+|---|---|
+| [Overview](docs/OVERVIEW.md) | What it is, who it's for, and a five-minute demo script |
+| [Features](docs/FEATURES.md) | Every part of the screen and how it behaves |
+| [Architecture](docs/ARCHITECTURE.md) | Files, data flow, simulator, alert engine, connecting a real service |
+| [API reference](docs/API.md) | `PlatformAPI` calls and object shapes |
+| [UI design](docs/UI_DESIGN.md) | Layout, shape and colour encoding, tokens, accessibility |
+| [Scenarios](docs/SCENARIOS.md) | The nine scripted events, sensor by sensor |
+| [Sensor catalog](docs/SENSOR_CATALOG.md) | Six categories, 49 sensor types and what each tells you |
+| [Roadmap](docs/ROADMAP.md) | Known limitations, next steps, open questions |
+
 ## Run it
 
 Babel-in-the-browser loads the `.jsx` files over HTTP, so serve the folder
@@ -107,7 +120,7 @@ A reading looks like:
 { "seq": 4182, "ts": "2026-10-21T13:08:46.615Z", "sensorId": "GD-H2S-WHB-02",
   "type": "GD_H2S", "category": "safety", "zone": "WHB", "value": 16.4,
   "unit": "ppm", "status": "alarm", "quality": "GOOD",
-  "node": "SN-029", "link": "mesh", "latencyMs": 7 }
+  "node": "SN-028", "link": "mesh", "latencyMs": 7 }
 ```
 
 After editing `js/catalog.jsx` or sensor placements, regenerate the doc tables:
