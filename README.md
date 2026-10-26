@@ -139,3 +139,7 @@ After editing `js/catalog.jsx` or sensor placements, regenerate the doc tables:
 ```sh
 node scripts/gen-catalog-doc.js
 ```
+
+## Deployment
+
+Live at **https://platform.sigilint.com**, also served at `https://sigilint-offshore-platform-monitor.netlify.app`. It is the Netlify site `sigilint-offshore-platform-monitor`, which deploys automatically on every push to `main` of `Sigilint/offshore-platform-monitor`. Build settings are in `netlify.toml`: no build step, and the repo root is published. See `DEPLOYMENT.md` in `Sigilint/sigilint-web` for how all the Sigilint sites are hosted.
